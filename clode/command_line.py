@@ -6,29 +6,30 @@ class CommandException(Exception):
     pass
 
 
-def run_command(*args: str | None) -> str:
+def run_command(*args: str | None) -> str | None:
+    """Run a console command and return stdout"""
     filtered_args: list[str] = [arg for arg in args if arg is not None]
-    print(f"Running: {filtered_args}")
-    result = subprocess.run(filtered_args, shell=True)
+    result = subprocess.run(filtered_args, stderr=subprocess.PIPE, shell=True)
     if result.returncode != 0:
         raise CommandException(
             f'Error {result.returncode} when running {" ".join(filtered_args)}',
             result.stderr.decode(),
         )
-
-    return result.stdout.decode()
+    if result.stdout is not None:  # type: ignore
+        return result.stdout.decode()
 
 
 def clone(url: str, path: str | None = None) -> str:
     """Clone a git repository from `url` and return the path"""
-    result = run_command("git", "clone", "--progress", url, path)
-    lines = result.splitlines()
-    print(lines)
-    first_line = lines[0]
-    output = re.search("(?<=').+(?=')", first_line)
-    if output is None:
-        raise CommandException(f"Unable to find output directory in line: {first_line}")
-    return output.group(0)
+    if path is None:
+        m = re.search(r"(?<=\/)[^\/]+?(?=(\.git)?$)", url)
+        if m is None:
+            raise Exception(f"Invalid git repository url: {url}")
+        path = m.group(0)
+
+    run_command("git", "clone", url, path)
+
+    return path
 
 
 def code(path: str):
