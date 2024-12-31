@@ -16,12 +16,12 @@ classifiers = [
 dependencies = ['colorama']
 
 [project.urls]
-"Bug Reports" = "https://github.com/olillin/RepoChecker/issues"
-"Source" = "https://github.com/olillin/RepoChecker"
+"Bug Reports" = "https://github.com/olillin/clode/issues"
+"Source" = "https://github.com/olillin/clode"
 
 [build-system]
 requires = ['setuptools']
 build-backend = 'setuptools.build_meta'
 
 [project.scripts]
-repochecker = 'repochecker:main'
+clode = 'clode:main'

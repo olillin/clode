@@ -9,11 +9,11 @@ class CommandException(Exception):
 def run_command(*args: str | None) -> str | None:
     """Run a console command and return stdout"""
     filtered_args: list[str] = [arg for arg in args if arg is not None]
-    result = subprocess.run(filtered_args, stderr=subprocess.PIPE, shell=True)
+    result = subprocess.run(filtered_args, shell=True)
     if result.returncode != 0:
         raise CommandException(
             f'Error {result.returncode} when running {" ".join(filtered_args)}',
-            result.stderr.decode(),
+            result.stderr.decode() if result.stderr is not None else None,  # type: ignore
         )
     if result.stdout is not None:  # type: ignore
         return result.stdout.decode()

@@ -1,4 +1,4 @@
-from command_line import clone, code, CommandException
+from .command_line import clone, code, CommandException
 import re
 
 import os
@@ -21,12 +21,8 @@ def clode(repository: str, output: str | None = None):
 
     try:
         output_folder: str = clone(repository, output)
-    except CommandException as e:
-        print("git clone failed:")
-        if len(e.args) > 1:
-            print(e.args[1])
-        else:
-            print("".join(e.args))
+    except CommandException:
+        print("git clone failed")
         exit()
 
     print(f"Opening '{output_folder}' in VSCode...")

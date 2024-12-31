@@ -1,5 +1,5 @@
 import argparse
-from clode import clode
+from .clode import clode
 
 
 def parse_arguments() -> argparse.Namespace:
