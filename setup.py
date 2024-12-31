@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name="clode",
+    name="git-clode",
     description="CLI tool to open git repositories quickly",
     author="Oli",
     author_email="oli@olillin.com",

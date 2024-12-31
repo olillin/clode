@@ -3,7 +3,10 @@ import subprocess
 
 
 class CommandException(Exception):
-    pass
+    def __init__(self, returncode: int, command_args: list[str], stderr: str | None):
+        self.returncode = returncode
+        self.command_args = command_args
+        self.stderr = stderr
 
 
 def run_command(*args: str | None) -> str | None:
@@ -12,24 +15,24 @@ def run_command(*args: str | None) -> str | None:
     result = subprocess.run(filtered_args, shell=True)
     if result.returncode != 0:
         raise CommandException(
-            f'Error {result.returncode} when running {" ".join(filtered_args)}',
+            result.returncode,
+            filtered_args,
             result.stderr.decode() if result.stderr is not None else None,  # type: ignore
         )
     if result.stdout is not None:  # type: ignore
         return result.stdout.decode()
 
 
-def clone(url: str, path: str | None = None) -> str:
-    """Clone a git repository from `url` and return the path"""
-    if path is None:
-        m = re.search(r"(?<=\/)[^\/]+?(?=(\.git)?$)", url)
-        if m is None:
-            raise Exception(f"Invalid git repository url: {url}")
-        path = m.group(0)
+def get_clone_output(url: str) -> str:
+    m = re.search(r"(?<=\/)[^\/]+?(?=(\.git)?$)", url)
+    if m is None:
+        raise Exception(f"Invalid git repository url: {url}")
+    return m.group(0)
 
+
+def clone(url: str, path: str):
+    """Clone a git repository from `url` into `path`"""
     run_command("git", "clone", url, path)
-
-    return path
 
 
 def code(path: str):
