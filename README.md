@@ -5,7 +5,7 @@ CLI tool to open git repositories quickly.
 ## Installation
 
 ```console
-pip install clode
+pip install git-clode
 ```
 
 ## Usage
