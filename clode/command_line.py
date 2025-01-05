@@ -12,15 +12,16 @@ class CommandException(Exception):
 def run_command(*args: str | None) -> str | None:
     """Run a console command and return stdout"""
     filtered_args: list[str] = [arg for arg in args if arg is not None]
-    result = subprocess.run(filtered_args, shell=True)
-    if result.returncode != 0:
+    process = subprocess.run(
+        filtered_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
+    )
+    if process.returncode != 0:
         raise CommandException(
-            result.returncode,
+            process.returncode,
             filtered_args,
-            result.stderr.decode() if result.stderr is not None else None,  # type: ignore
+            process.stdout.decode() if process.stdout is not None else None,  # type: ignore
         )
-    if result.stdout is not None:  # type: ignore
-        return result.stdout.decode()
+    return process.stdout.decode() if process.stdout is not None else None  # type: ignore
 
 
 def get_clone_output(url: str) -> str:
@@ -30,7 +31,7 @@ def get_clone_output(url: str) -> str:
     return m.group(0)
 
 
-def clone(url: str, path: str):
+def git_clone(url: str, path: str):
     """Clone a git repository from `url` into `path`"""
     run_command("git", "clone", url, path)
 
@@ -38,3 +39,21 @@ def clone(url: str, path: str):
 def code(path: str):
     """Open a directory in VSCode"""
     run_command("code", path)
+
+
+def gh_search_repository(query: str) -> list[str]:
+    """Search for a repository with the GitHub API"""
+
+    stdout = run_command(
+        "gh",
+        "api",
+        "search/repositories",
+        "--method",
+        "GET",
+        "-f",
+        f"q={query}",
+        "-q .items[]|.full_name",
+    )
+    if stdout is None:
+        raise Exception("Received no response from gh CLI")
+    return [line for line in stdout.split("\n") if line.strip() != ""]

@@ -8,6 +8,7 @@ setup(
     license="MIT",
     install_requires=[
         "colorama",
+        "inquirer",
     ],
     entry_points={
         "console_scripts": [
