@@ -1,5 +1,5 @@
 from enum import StrEnum
-from .command_line import clone, code, CommandException, get_clone_output
+from .command_line import git_clone, code, CommandException, get_clone_output
 import re
 from colorama import Fore
 
@@ -40,7 +40,7 @@ def clode(
     clone_success = False
     try:
         print(f"Cloning {Fore.YELLOW}{url}{Fore.LIGHTBLACK_EX}")
-        clone(url, output_folder)
+        git_clone(url, output_folder)
         clone_success = True
     except CommandException as e:
         print(Fore.RED + "git clone failed" + Fore.RESET)
