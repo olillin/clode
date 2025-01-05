@@ -10,14 +10,34 @@ pip install clode
 
 ## Usage
 
-Clode with URL:
+```console
+$ clode -h
+usage: clode [-h] [-n | -a] [-q | -l] repository [directory]
+
+CLI tool to open git repositories quickly
+
+positional arguments:
+  repository         url or name of repository to clone
+  directory          the name of a new directory to clone into
+
+options:
+  -h, --help         show this help message and exit
+  -n, --never-open   don't open after cloning
+  -a, --always-open  open even if already cloned
+  -q, --search       search for a repository on GitHub
+  -l, --lazy         lazy search for a repository on GitHub
+```
+
+## Examples
+
+### Clode with URL
 
 ```console
 $ clode https://github.com/olillin/clode
 Cloning https://github.com/olillin/clode
 ```
 
-Clode with owner and repository name only:
+### Clode with owner and repository name only
 
 ```console
 $ clode olillin/clode
@@ -28,7 +48,7 @@ Cloning https://github.com/olillin/clode
 > The default service is GitHub. This can be changed in settings.
 <!-- TODO: Add settings file name -->
 
-Clode with repository name only:
+### Clode with repository name only
 
 ```console
 $ clode clode
@@ -39,7 +59,7 @@ Cloning https://github.com/olillin/clode
 > Requires a default user to be configured in settings
 <!-- TODO: Add settings file name -->
 
-Clode with GitHub search query:
+### Clode with GitHub search query
 
 ```console
 $ clode -q "org:cthit in:name hubbit"
@@ -48,7 +68,7 @@ $ clode -q "org:cthit in:name hubbit"
    cthit/hubbIT-old
 ```
 
-Clode with lazy search:
+### Clode with lazy search
 
 ```console
 $ clode -l "cthit/chalmers it"
