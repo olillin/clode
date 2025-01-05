@@ -29,7 +29,7 @@ def search_repository(query: str) -> str:
     return answers["repo"]
 
 
-LAZY_REPOSITORY_PATTERN = re.compile(r"^([\w.-]+\/)?[\w.-]+$")
+LAZY_REPOSITORY_PATTERN = re.compile(r"^([\w.-]+\/)?[\w. -]+$")
 
 
 def resolve_lazy(repository: str) -> str:
