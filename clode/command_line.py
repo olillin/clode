@@ -1,5 +1,6 @@
 import re
 import subprocess
+import platform
 
 
 class CommandException(Exception):
@@ -12,8 +13,10 @@ class CommandException(Exception):
 def run_command(*args: str | None) -> str | None:
     """Run a console command and return stdout"""
     filtered_args: list[str] = [arg for arg in args if arg is not None]
+
+    use_shell = platform.system() == "Windows"
     process = subprocess.run(
-        filtered_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
+        filtered_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=use_shell
     )
     if process.returncode != 0:
         raise CommandException(
