@@ -1,5 +1,9 @@
 # clode
 
+> [!WARN] Clode has been archived
+> 
+> Clode is no longer being maintained. Please check out [lazyclone](https://github.com/olillin/lazyclone) instead.
+
 CLI tool to open git repositories quickly.
 
 ## Installation
