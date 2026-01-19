@@ -1,8 +1,9 @@
 # clode
 
-> [!WARN] Clode has been archived
+> [!WARNING]  
+> Clode has been archived.  
 > 
-> Clode is no longer being maintained. Please check out [lazyclone](https://github.com/olillin/lazyclone) instead.
+> Clode is no longer being maintained. Please check out [lazyclone](https://github.com/olillin/lazyclone) instead.  
 
 CLI tool to open git repositories quickly.
 
@@ -48,8 +49,8 @@ $ clode olillin/clode
 Cloning https://github.com/olillin/clode
 ```
 
-> [!NOTE]
-> The default service is GitHub. This can be changed in settings.
+> [!NOTE]  
+> The default service is GitHub. This can be changed in settings.  
 <!-- TODO: Add settings file name -->
 
 ### Clode with repository name only
@@ -59,8 +60,8 @@ $ clode clode
 Cloning https://github.com/olillin/clode
 ```
 
-> [!NOTE]
-> Requires a default user to be configured in settings
+> [!NOTE]  
+> Requires a default user to be configured in settings  
 <!-- TODO: Add settings file name -->
 
 ### Clode with GitHub search query
